@@ -3,9 +3,9 @@ import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
 
 const INGREDIENT_PRICES = {
-  salad: 1,
-  cheese: 1,
-  meat: 2,
+  salad: 1.75,
+  cheese: 1.5,
+  meat: 1.25,
   bacon: 1,
 };
 
@@ -50,12 +50,19 @@ class BurgerBuilder extends Component {
   };
 
   render() {
+      const disabled = { ...this.state.ingredients}
+      for (let key in disabled) {
+          disabled[key] = disabled[key] < 1
+      }
+      
     return (
       <Fragment>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
+          price={this.state.totalPrice}
+          disabled={disabled}
         />
       </Fragment>
     );
