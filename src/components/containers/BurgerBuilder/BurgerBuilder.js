@@ -56,6 +56,10 @@ class BurgerBuilder extends Component {
     this.setState({ isPurchasing: true });
   };
 
+  onModalClose = () => {
+    this.setState({ isPurchasing: false });
+  };
+
   render() {
     const { ingredients, totalPrice } = this.state;
     const disabled = { ...this.state.ingredients };
@@ -66,7 +70,7 @@ class BurgerBuilder extends Component {
     return (
       <Fragment>
         {
-          <Modal show={this.state.isPurchasing}>
+          <Modal show={this.state.isPurchasing} modalClosed={this.onModalClose}>
             <OrderSummary ingredients={ingredients} />
           </Modal>
         }
