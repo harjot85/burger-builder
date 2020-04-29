@@ -25,7 +25,7 @@ const buildControls = (props) => {
         />
       ))}
       {props.price > 5 ? (
-        <button className={classes.OrderButton}>ORDER NOW</button>
+        <button className={classes.OrderButton} onClick={props.ordered}>ORDER NOW</button>
       ) : null}
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
+import Modal from "../../UI/Modal/Modal";
+import OrderSummary from "../../Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
   salad: 1.75,
@@ -18,6 +20,7 @@ class BurgerBuilder extends Component {
       bacon: 0,
     },
     totalPrice: 5,
+    isPurchasing: false,
   };
 
   addIngredientHandler = (type) => {
@@ -49,20 +52,31 @@ class BurgerBuilder extends Component {
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
   };
 
+  purchaseHandler = () => {
+    this.setState({ isPurchasing: true });
+  };
+
   render() {
-      const disabled = { ...this.state.ingredients}
-      for (let key in disabled) {
-          disabled[key] = disabled[key] < 1
-      }
-      
+    const { ingredients, totalPrice } = this.state;
+    const disabled = { ...this.state.ingredients };
+    for (let key in disabled) {
+      disabled[key] = disabled[key] < 1;
+    }
+
     return (
       <Fragment>
-        <Burger ingredients={this.state.ingredients} />
+        {
+          <Modal show={this.state.isPurchasing}>
+            <OrderSummary ingredients={ingredients} />
+          </Modal>
+        }
+        <Burger ingredients={ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
-          price={this.state.totalPrice}
+          price={totalPrice}
           disabled={disabled}
+          ordered={this.purchaseHandler}
         />
       </Fragment>
     );

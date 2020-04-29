@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./Burger.css";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import BurgerIngredients from "./BurgerIngredients/BurgerIngredients";
 
 const burger = (props) => {
   let requestedIngredients = Object.keys(props.ingredients)
